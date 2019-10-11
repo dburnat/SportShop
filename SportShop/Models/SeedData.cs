@@ -15,6 +15,7 @@ namespace SportShop.Models
             ApplicationDbContext context = app.ApplicationServices
                 .GetRequiredService<ApplicationDbContext>();
             context.Database.Migrate();
+
             if (!context.Products.Any())
             {
                 context.Products.AddRange(
@@ -23,7 +24,8 @@ namespace SportShop.Models
                         Name = "Kajak",
                         Description = "Łódka przeznaczona dla jednej osoby",
                         Category = "Sporty wodne",
-                        Price = 275
+                        Price = 275,
+                        Rating = 5
                     },
                     new Product
                     {
