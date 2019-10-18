@@ -56,13 +56,13 @@ namespace SportShop.Models
                     {
                         Name = "Adidas",
                         Country = "Germany",
-                        Products = products
+                        
                     },
                     new Manufacturer
                     {
                         Name = "Puma",
                         Country = "France",
-                        Products = products
+                        
                     }
                     );
                 context.SaveChanges();
