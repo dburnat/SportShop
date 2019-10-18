@@ -14,7 +14,59 @@ namespace SportShop.Models
         {
             ApplicationDbContext context = app.ApplicationServices
                 .GetRequiredService<ApplicationDbContext>();
+            //context.Database.EnsureDeleted();
             context.Database.Migrate();
+
+
+            var products = new List<Product>
+            {
+                new Product
+                    {
+                        Name = "Piłka do gry w piłkę nożną",
+                        Description = "Skórzana rozmiar 5",
+                        Category = "Sporty zespołowe",
+                        Price = 67,
+                        Rating = 5
+                    },
+                new Product
+                    {
+                        Name = "Ochraniacze",
+                        Description = "Chronią nogi",
+                        Category = "Sporty zespołowe",
+                        Price = 45,
+                        Rating = 5
+                    },
+
+            };
+
+            products.ForEach(s => context.Products.Add(s));
+            context.SaveChanges();
+
+            if (!context.Manufacturers.Any())
+            {
+                context.Manufacturers.AddRange(
+                    new Manufacturer
+                    {
+                        Name = "Nike+",
+                        Country = "United Kingdom",
+                        Products = products
+
+                    },
+                    new Manufacturer
+                    {
+                        Name = "Adidas",
+                        Country = "Germany",
+                        Products = products
+                    },
+                    new Manufacturer
+                    {
+                        Name = "Puma",
+                        Country = "France",
+                        Products = products
+                    }
+                    );
+                context.SaveChanges();
+            }
 
             if (!context.Products.Any())
             {
@@ -86,6 +138,12 @@ namespace SportShop.Models
                 );
                 context.SaveChanges();
             }
+
+            
+
+           
+
+            
         }
     }
 }

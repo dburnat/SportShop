@@ -13,5 +13,7 @@ namespace SportShop.Models
         public decimal Price { get; set; }
         public string Category { get; set; }
         public int Rating { get; set; }
+        public int? ManufacturerId { get; set; }
+        public Manufacturer Manufacturer { get; set; }
     }
 }

@@ -26,6 +26,7 @@ namespace SportShop
         {
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
             services.AddTransient<IProductRepository, EFProductRepository>();
+            services.AddTransient<IManufacturerRepository, EFManufacturerRepository>();
             services.AddMvc();
         }
 
@@ -39,7 +40,7 @@ namespace SportShop
             app.UseStaticFiles();
             app.UseMvc(routes => routes.MapRoute(
                 name: "default",
-                template: "{controller=Product}/{action=List}/{id?}")
+                template: "{controller=Manufacturer}/{action=List}/{id?}")
             );
             SeedData.EnsurePopulated(app);
 
