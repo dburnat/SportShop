@@ -16,7 +16,7 @@ namespace SportShop
     {
         public IConfiguration Configuration { get; }
 
-        public Startup(IConfiguration configuration )
+        public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
@@ -38,9 +38,17 @@ namespace SportShop
 
             app.UseStatusCodePages();
             app.UseStaticFiles();
-            app.UseMvc(routes => routes.MapRoute(
-                name: "default",
-                template: "{controller=Manufacturer}/{action=List}/{id?}")
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Manufacturer}/{action=List}/{id?}");
+                routes.MapRoute(
+                   name: "category",
+                   template: "{controller=Product}/{action=ListCategory}/{category?}" 
+                    );
+            }
+
             );
             SeedData.EnsurePopulated(app);
 
