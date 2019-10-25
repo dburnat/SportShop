@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20191025081124_AllManufacturersGotProducts.cs" />
+    <Compile Remove="Migrations\20191025081124_AllManufacturersGotProducts.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="wwwroot\" />
   </ItemGroup>
 

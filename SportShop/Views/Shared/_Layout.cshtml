@@ -6,6 +6,10 @@
     <title>SportShop</title>
 </head>
 <body>
+
+    <div id="categories" class="col-3">
+        @await Component.InvokeAsync("CategoryList")
+    </div>
     <div>
         @RenderBody()
     </div>

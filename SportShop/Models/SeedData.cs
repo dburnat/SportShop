@@ -37,41 +37,12 @@ namespace SportShop.Models
                         Rating = 5
                     },
 
+
             };
 
-            products.ForEach(s => context.Products.Add(s));
-            context.SaveChanges();
-
-            if (!context.Manufacturers.Any())
+            var products2 = new List<Product>
             {
-                context.Manufacturers.AddRange(
-                    new Manufacturer
-                    {
-                        Name = "Nike+",
-                        Country = "United Kingdom",
-                        Products = products
-
-                    },
-                    new Manufacturer
-                    {
-                        Name = "Adidas",
-                        Country = "Germany",
-                        
-                    },
-                    new Manufacturer
-                    {
-                        Name = "Puma",
-                        Country = "France",
-                        
-                    }
-                    );
-                context.SaveChanges();
-            }
-
-            if (!context.Products.Any())
-            {
-                context.Products.AddRange(
-                    new Product
+                 new Product
                     {
                         Name = "Kajak",
                         Description = "Łódka przeznaczona dla jednej osoby",
@@ -86,28 +57,11 @@ namespace SportShop.Models
                         Category = "Sporty wodne",
                         Price = 48.95m
                     },
-                    new Product
-                    {
-                        Name = "Piłka",
-                        Description = "Zatwierdzone przez FIFA rozmiar i waga",
-                        Category = "Piłka nożna",
-                        Price = 19.50m
-                    },
-                    new Product
-                    {
-                        Name = "Flagi narożne",
-                        Description = "Nadadzą twojemu boisku profesjonalny wygląd",
-                        Category = "Piłka nożna",
-                        Price = 34.95m
-                    },
-                    new Product
-                    {
-                        Name = "Stadiom",
-                        Description = "Składany stadion na 35 000 osób",
-                        Category = "Piłka nożna",
-                        Price = 79500
-                    },
-                    new Product
+            };
+
+            var products3 = new List<Product>
+            {
+                new Product
                     {
                         Name = "Czapka",
                         Description = "Zwiększa efektywność mózgu o 75%",
@@ -135,15 +89,108 @@ namespace SportShop.Models
                         Category = "Szachy",
                         Price = 1200
                     }
-                );
+            };
+
+            products.ForEach(s => context.Products.Add(s));
+            context.SaveChanges();
+
+            if (!context.Manufacturers.Any())
+            {
+                context.Manufacturers.AddRange(
+                    new Manufacturer
+                    {
+                        Name = "Nike+",
+                        Country = "United Kingdom",
+                        Products = products
+
+                    },
+                    new Manufacturer
+                    {
+                        Name = "Adidas",
+                        Country = "Germany",
+                        Products = products2
+                        
+                    },
+                    new Manufacturer
+                    {
+                        Name = "Puma",
+                        Country = "France",
+                        Products = products3
+                        
+                    }
+                    );
                 context.SaveChanges();
             }
 
-            
-
-           
-
-            
-        }
+            //if (!context.Products.Any())
+            //{
+            //    context.Products.AddRange(
+            //        new Product
+            //        {
+            //            Name = "Kajak",
+            //            Description = "Łódka przeznaczona dla jednej osoby",
+            //            Category = "Sporty wodne",
+            //            Price = 275,
+            //            Rating = 5
+            //        },
+            //        new Product
+            //        {
+            //            Name = "Kamizelka ratunkowa",
+            //            Description = "Chroni i dodaje uroku",
+            //            Category = "Sporty wodne",
+            //            Price = 48.95m
+            //        },
+            //        new Product
+            //        {
+            //            Name = "Piłka",
+            //            Description = "Zatwierdzone przez FIFA rozmiar i waga",
+            //            Category = "Piłka nożna",
+            //            Price = 19.50m
+            //        },
+            //        new Product
+            //        {
+            //            Name = "Flagi narożne",
+            //            Description = "Nadadzą twojemu boisku profesjonalny wygląd",
+            //            Category = "Piłka nożna",
+            //            Price = 34.95m
+            //        },
+            //        new Product
+            //        {
+            //            Name = "Stadiom",
+            //            Description = "Składany stadion na 35 000 osób",
+            //            Category = "Piłka nożna",
+            //            Price = 79500
+            //        },
+            //        new Product
+            //        {
+            //            Name = "Czapka",
+            //            Description = "Zwiększa efektywność mózgu o 75%",
+            //            Category = "Szachy",
+            //            Price = 16
+            //        },
+            //        new Product
+            //        {
+            //            Name = "Niestabilne krzesło",
+            //            Description = "Zmniejsza szanse przeciwnika",
+            //            Category = "Szachy",
+            //            Price = 29.95m
+            //        },
+            //        new Product
+            //        {
+            //            Name = "Ludzka szachownica",
+            //            Description = "Przyjemna gra dla całej rodziny!",
+            //            Category = "Szachy",
+            //            Price = 75
+            //        },
+            //        new Product
+            //        {
+            //            Name = "Błyszczący król",
+            //            Description = "Figura pokryta złotem i wysadzana diamentami",
+            //            Category = "Szachy",
+            //            Price = 1200
+            //        }
+            //    );
+            //    context.SaveChanges();
+            }
     }
 }
