@@ -41,11 +41,15 @@ namespace SportShop
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                    name: "default",
+                    name: null,
                     template: "{controller=Manufacturer}/{action=List}/{id?}");
                 routes.MapRoute(
-                   name: "category",
+                   name: null,
                    template: "{controller=Product}/{action=List}/{category?}" 
+                    );
+                routes.MapRoute(
+                   name: null,
+                   template: "{controller=Admin}/{action=Index}"
                     );
             }
 
