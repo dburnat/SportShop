@@ -44,7 +44,7 @@ namespace SportShop.Controllers
 
             if (productToDelete != null)
             {
-            TempData["message"] = $"Usunięto {product.Name}.";
+            TempData["message"] = $"Usunięto {productToDelete.Name}.";
             }
             return RedirectToAction("Index");
         }
