@@ -6,7 +6,7 @@
 }
 
     <form asp-action="Edit" method="post">
-        <input type="hidden" asp-for="ProductID" />
+        <input type="hidden" asp-for="ProductId" />
         <div class="form-group">
             <label asp-for="Name">Produkt</label>
             <div><span asp-validation-for="Name" class="text-danger"></span></div>
@@ -28,7 +28,7 @@
             <input asp-for="Price" class="form-control" />
         </div>
         <div class="text-center">
-            <button class="btn btn-primary" type="submit">Zapisz</button>
+            <button  asp-action="Save"  class="btn btn-primary" type="submit">Zapisz</button>
             <a asp-action="Index" class="btn btn-secondary">Anuluj</a>
         </div>
     </form>

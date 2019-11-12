@@ -17,13 +17,13 @@ namespace SportShop.Models
 
         public void SaveProduct(Product product)
         {
-            if (product.ProductID == 0)
+            if (product.ProductId == 0)
             {
                 dbContext.Products.Add(product);
             }
             else
             {
-                Product productToEdit = dbContext.Products.FirstOrDefault(p => p.ProductID == product.ProductID);
+                Product productToEdit = dbContext.Products.FirstOrDefault(p => p.ProductId == product.ProductId);
                 if (productToEdit != null)
                 {
                     productToEdit.Name = product.Name;
@@ -37,7 +37,7 @@ namespace SportShop.Models
 
         public Product DeleteProduct(int id)
         {
-            Product productToDelete = dbContext.Products.FirstOrDefault(p => p.ProductID == id);
+            Product productToDelete = dbContext.Products.FirstOrDefault(p => p.ProductId == id);
             if (productToDelete != null)
             {
                 dbContext.Products.Remove(productToDelete);

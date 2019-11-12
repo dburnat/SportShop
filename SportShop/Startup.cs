@@ -51,6 +51,10 @@ namespace SportShop
                    name: null,
                    template: "{controller=Admin}/{action=Index}"
                     );
+                routes.MapRoute(
+                name:null,
+                template:"{controller=Admin}/{action=Edit}/{id?}"
+                    );
             }
 
             );

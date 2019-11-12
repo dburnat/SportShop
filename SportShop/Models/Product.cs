@@ -8,7 +8,7 @@ namespace SportShop.Models
 {
     public class Product 
     {
-        public int ProductID { get; set; }
+        public int ProductId { get; set; }
         [Required]
         public string Name { get; set; }
         public string Description { get; set; }
@@ -16,7 +16,6 @@ namespace SportShop.Models
         public decimal Price { get; set; }
         public string Category { get; set; }
         [RegularExpression(@"\d")]
-        [MaxLength(1)]
         [Required]
         public int Rating { get; set; }
         public int? ManufacturerId { get; set; }
