@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SportShop.Models;
 using System;
 using System.Collections.Generic;
@@ -43,12 +43,22 @@ namespace SportShop.Controllers
             }
         }
 
-        public ViewResult Create() =>  View("Edit", new Product());
+        public ViewResult Create()
+        {
+            PopulateCategoriesDropDownList();
+            return View("Edit", new Product());
+        }
+
+        private void PopulateCategoriesDropDownList(object selectedCategory = null)
+        {
+            var categoriesQuery = _categoryRepository.Categories.OrderBy(c => c.Name);
+            ViewBag.CategoryID = new SelectList(categoriesQuery, "CategoryID", "Name", selectedCategory);
+        }
 
         [HttpPost]
         public IActionResult Delete(Product product)
         {
-            Product productToDelete = _repository.DeleteProduct(product.ProductID);
+            Product productToDelete = _productRepository.DeleteProduct(product.ProductID);
 
             if (productToDelete != null)
             {
