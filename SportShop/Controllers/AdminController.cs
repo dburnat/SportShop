@@ -13,15 +13,20 @@ namespace SportShop.Controllers
         private readonly IProductRepository _repository;
         private readonly ICategoryRepository _categoryRepository;
 
-        public AdminController(IProductRepository repository, ICategoryRepository categoryRepository)
+        public AdminController(IProductRepository productRepository, ICategoryRepository categoryRepository)
         {
-            this._repository = repository;
+            this._repository = productRepository;
             _categoryRepository = categoryRepository;
         }
 
         public ViewResult Index() => View(_repository.Products);
 
-        public ViewResult Edit(int id) => View(_repository.Products.FirstOrDefault(p => p.ProductID == id));
+        public ViewResult Edit(int id)
+        {
+            Product product = _repository
+            PopulateCategoriesDropDownList();
+            return View(_repository.Products.FirstOrDefault(p => p.ProductID == id));
+        }
 
         [HttpPost]
         public IActionResult Save(Product product)
