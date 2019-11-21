@@ -18,13 +18,38 @@ namespace SportShop.Models
             context.Database.Migrate();
 
 
+            if (!context.Categories.Any())
+            {
+                var categories = new List<Category>
+                {
+                    new Category
+                    {
+                        Name = "Sporty zespołowe"
+                    },
+                    new Category
+                    {
+                        Name = "Sporty wodne"
+                    },
+                    new Category
+                    {
+                        Name = "Szachy"
+                    },
+                };
+                categories.ForEach( p => context.Categories.Add(p));
+                context.SaveChanges();
+
+
+            }
+
+            
+
             var products = new List<Product>
             {
                 new Product
                     {
                         Name = "Piłka do gry w piłkę nożną",
                         Description = "Skórzana rozmiar 5",
-                        Category = "Sporty zespołowe",
+                        CategoryID = context.Categories.Single(s => s.Name == "Sporty zespołowe").CategoryID,
                         Price = 67,
                         Rating = 5
                     },
@@ -32,7 +57,7 @@ namespace SportShop.Models
                     {
                         Name = "Ochraniacze",
                         Description = "Chronią nogi",
-                        Category = "Sporty zespołowe",
+                        CategoryID = context.Categories.Single(s => s.Name == "Sporty zespołowe").CategoryID,
                         Price = 45,
                         Rating = 5
                     },
@@ -46,7 +71,7 @@ namespace SportShop.Models
                     {
                         Name = "Kajak",
                         Description = "Łódka przeznaczona dla jednej osoby",
-                        Category = "Sporty wodne",
+                        CategoryID = context.Categories.Single(s => s.Name == "Sporty wodne").CategoryID,
                         Price = 275,
                         Rating = 5
                     },
@@ -54,7 +79,7 @@ namespace SportShop.Models
                     {
                         Name = "Kamizelka ratunkowa",
                         Description = "Chroni i dodaje uroku",
-                        Category = "Sporty wodne",
+                        CategoryID = context.Categories.Single(s => s.Name == "Sporty wodne").CategoryID,
                         Price = 48.95m
                     },
             };
@@ -65,31 +90,33 @@ namespace SportShop.Models
                     {
                         Name = "Czapka",
                         Description = "Zwiększa efektywność mózgu o 75%",
-                        Category = "Szachy",
+                        CategoryID = context.Categories.Single(s => s.Name == "Szachy").CategoryID,
                         Price = 16
                     },
                     new Product
                     {
                         Name = "Niestabilne krzesło",
                         Description = "Zmniejsza szanse przeciwnika",
-                        Category = "Szachy",
+                        CategoryID = context.Categories.Single(s => s.Name == "Szachy").CategoryID,
                         Price = 29.95m
                     },
                     new Product
                     {
                         Name = "Ludzka szachownica",
                         Description = "Przyjemna gra dla całej rodziny!",
-                        Category = "Szachy",
+                        CategoryID = context.Categories.Single(s => s.Name == "Szachy").CategoryID,
                         Price = 75
                     },
                     new Product
                     {
                         Name = "Błyszczący król",
                         Description = "Figura pokryta złotem i wysadzana diamentami",
-                        Category = "Szachy",
+                        CategoryID =context.Categories.Single(s => s.Name == "Szachy").CategoryID,
                         Price = 1200
                     }
             };
+
+
 
             products.ForEach(s => context.Products.Add(s));
             context.SaveChanges();
