@@ -10,7 +10,12 @@
     </environment>
 </head>
 <body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="navbar-nav">
+        <a class="nav-item nav-link">@Html.ActionLink("Admin", "Index", "Admin")</a>
 
+    </div>
+</nav>
     <div id="categories" class="col-3">
         @await Component.InvokeAsync("CategoryList")
     </div>

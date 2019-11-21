@@ -15,11 +15,16 @@
     <script src="lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 </head>
 <body class="m-1 p-1">
-    <div class="bg-info p-2"><h4>@ViewBag.Title</h4></div>
-    @if (TempData["message"] != null)
-    {
-        <div class="alert alert-success">@TempData["message"]</div>
-    }
-    @RenderBody()
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link" href="@Url.Content("~/")">Index</a>
+        </div>
+    </nav>
+<div class="bg-info p-2"><h4>@ViewBag.Title</h4></div>
+@if (TempData["message"] != null)
+{
+    <div class="alert alert-success">@TempData["message"]</div>
+}
+@RenderBody()
 </body>
 </html>
