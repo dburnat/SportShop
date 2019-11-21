@@ -1,31 +1,34 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using SportShop.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace SportShop.Controllers
 {
     public class AdminController : Controller
     {
-        private readonly IProductRepository repository;
+        private readonly IProductRepository _repository;
+        private readonly ICategoryRepository _categoryRepository;
 
-        public AdminController(IProductRepository repository)
+        public AdminController(IProductRepository repository, ICategoryRepository categoryRepository)
         {
-            this.repository = repository;
+            this._repository = repository;
+            _categoryRepository = categoryRepository;
         }
 
-        public ViewResult Index() => View(repository.Products);
+        public ViewResult Index() => View(_repository.Products);
 
-        public ViewResult Edit(int id) => View(repository.Products.FirstOrDefault(p => p.ProductID == id));
+        public ViewResult Edit(int id) => View(_repository.Products.FirstOrDefault(p => p.ProductID == id));
 
         [HttpPost]
         public IActionResult Save(Product product)
         {
             if (ModelState.IsValid)
             {
-                repository.SaveProduct(product);
+                _repository.SaveProduct(product);
                 TempData["message"] = $"Zapisano {product.Name}.";
                 return RedirectToAction("Index");
             }
@@ -40,7 +43,7 @@ namespace SportShop.Controllers
         [HttpPost]
         public IActionResult Delete(Product product)
         {
-            Product productToDelete = repository.DeleteProduct(product.ProductID);
+            Product productToDelete = _repository.DeleteProduct(product.ProductID);
 
             if (productToDelete != null)
             {
