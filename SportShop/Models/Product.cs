@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -14,10 +14,12 @@ namespace SportShop.Models
         public string Description { get; set; }
         [Required]
         public decimal Price { get; set; }
-        public string Category { get; set; }
+        
         [RegularExpression(@"\d")]
         [Required]
         public int Rating { get; set; }
+
+        public int? CategoryID { get; set; }
         public int? ManufacturerId { get; set; }
         public Manufacturer Manufacturer { get; set; }
     }
