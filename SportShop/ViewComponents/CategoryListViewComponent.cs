@@ -22,9 +22,9 @@ namespace SportShop.ViewComponents
             var categories = await GetCategoriesAsync();
             return View(categories);
         }
-        private Task<List<string>> GetCategoriesAsync()
+        private Task<List<Category>> GetCategoriesAsync()
         {
-            return dbContext.Products.Select(c => c.Category).Distinct().ToListAsync();
+            return dbContext.Categories.Distinct().ToListAsync();
         }
 
     }
