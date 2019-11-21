@@ -10,22 +10,22 @@ namespace SportShop.Controllers
 {
     public class AdminController : Controller
     {
-        private readonly IProductRepository _repository;
+        private readonly IProductRepository _productRepository;
         private readonly ICategoryRepository _categoryRepository;
 
         public AdminController(IProductRepository productRepository, ICategoryRepository categoryRepository)
         {
-            this._repository = productRepository;
+            _productRepository = productRepository;
             _categoryRepository = categoryRepository;
         }
 
-        public ViewResult Index() => View(_repository.Products);
+        public ViewResult Index() => View(_productRepository.Products);
 
         public ViewResult Edit(int id)
         {
-            Product product = _repository
-            PopulateCategoriesDropDownList();
-            return View(_repository.Products.FirstOrDefault(p => p.ProductID == id));
+            Product product = _productRepository.Products.First(c => c.ProductID == id);
+            PopulateCategoriesDropDownList(product.CategoryID);
+            return View(_productRepository.Products.FirstOrDefault(p => p.ProductID == id));
         }
 
         [HttpPost]
@@ -33,7 +33,7 @@ namespace SportShop.Controllers
         {
             if (ModelState.IsValid)
             {
-                _repository.SaveProduct(product);
+                _productRepository.SaveProduct(product);
                 TempData["message"] = $"Zapisano {product.Name}.";
                 return RedirectToAction("Index");
             }
