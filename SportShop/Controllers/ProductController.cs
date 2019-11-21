@@ -15,9 +15,6 @@ namespace SportShop.Controllers
         {
             this.repository = repository;
         }
-       //public ViewResult List() => View(repository.Products);
-
-       public ViewResult Index() => View();
 
         public ViewResult List(int ID) => View(repository.Products.Where(c => c.CategoryID == ID));
     }
