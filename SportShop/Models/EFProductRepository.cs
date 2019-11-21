@@ -30,6 +30,7 @@ namespace SportShop.Models
                     productToEdit.Price = product.Price;
                     productToEdit.Description = product.Description;
                     productToEdit.Rating = product.Rating;
+                    productToEdit.CategoryID = product.CategoryID;
                 }
             }
             dbContext.SaveChanges();
