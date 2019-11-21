@@ -18,7 +18,7 @@ namespace SportShop.Controllers
 
         public ViewResult Index() => View(repository.Products);
 
-        public ViewResult Edit(int id) => View(repository.Products.FirstOrDefault(p => p.ProductId == id));
+        public ViewResult Edit(int id) => View(repository.Products.FirstOrDefault(p => p.ProductID == id));
 
         [HttpPost]
         public IActionResult Save(Product product)
@@ -40,7 +40,7 @@ namespace SportShop.Controllers
         [HttpPost]
         public IActionResult Delete(Product product)
         {
-            Product productToDelete = repository.DeleteProduct(product.ProductId);
+            Product productToDelete = repository.DeleteProduct(product.ProductID);
 
             if (productToDelete != null)
             {

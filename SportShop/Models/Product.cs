@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -8,7 +8,7 @@ namespace SportShop.Models
 {
     public class Product 
     {
-        public int ProductId { get; set; }
+        public int ProductID { get; set; }
         [Required]
         public string Name { get; set; }
         public string Description { get; set; }
