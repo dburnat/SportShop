@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,6 +29,9 @@ namespace SportShop
             services.AddTransient<IProductRepository, EFProductRepository>();
             services.AddTransient<IManufacturerRepository, EFManufacturerRepository>();
             services.AddTransient<ICategoryRepository, EFCategoryRepository>();
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                    .AddEntityFrameworkStores<ApplicationDbContext>()
+                    .AddDefaultTokenProviders();
             services.AddMvc();
         }
 
