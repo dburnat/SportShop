@@ -16,10 +16,12 @@ namespace SportShop.Controllers
         private UserManager<IdentityUser> userManager;
         private SignInManager<IdentityUser> signInManager;
 
-        public AccountController(UserManager<IdentityUser> user, SignInManager<IdentityUser> signIn)
+        public AccountController(UserManager<IdentityUser> userMgr, SignInManager<IdentityUser> signIn)
         {
-            userManager = user;
+            userManager = userMgr;
             signInManager = signIn;
+
+            IdentitySeedData.EnsurePopulated(userMgr).Wait();
         }
 
         [AllowAnonymous]
