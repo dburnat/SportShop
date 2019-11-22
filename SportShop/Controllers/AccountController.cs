@@ -22,6 +22,15 @@ namespace SportShop.Controllers
             signInManager = signIn;
         }
 
+        [AllowAnonymous]
+        public ViewResult Login(string returnUrl)
+        {
+            return View(new LoginModel
+            {
+                ReturnUrl = returnUrl
+            });
+        }
+
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
