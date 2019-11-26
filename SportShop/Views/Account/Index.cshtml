@@ -1,8 +1,8 @@
-﻿@model IEnumerable<AppUser>
+﻿@model IEnumerable<Microsoft.AspNetCore.Identity.IdentityUser>
 
 @{
     ViewBag.Title = "Użytkownicy";
-    Layout = "_Layout";
+    Layout = "_AdminLayout";
 }
 
 <div class="bg-primary m-1 p-1 text-white"><h4>Konta użytkowników</h4></div>
@@ -14,7 +14,7 @@
     }
     else
     {
-        foreach (AppUser appUser in Model)
+        foreach (var appUser in Model)
         {
             <tr>
                 <td>@appUser.Id</td>
@@ -25,4 +25,4 @@
     }
 </table>
 
-<a class="btn btn-primary" asp-action="Create"></a>
+<a class="btn btn-primary" asp-action="Create">Dodaj użytkownika</a>
