@@ -54,19 +54,8 @@ namespace SportShop
             {
                 routes.MapRoute(
                     name: null,
-                    template: "{controller=Manufacturer}/{action=List}/{id?}");
-                routes.MapRoute(
-                   name: null,
-                   template: "{controller=Product}/{action=List}/{id?}" 
-                    );
-                routes.MapRoute(
-                   name: null,
-                   template: "{controller=Admin}/{action=Index}"
-                    );
-                routes.MapRoute(
-                name:null,
-                template:"{controller=Admin}/{action=Edit}/{id?}"
-                    );
+                    template: "{controller=Product}/{action=List}/{id?}");
+
             }
 
             );
