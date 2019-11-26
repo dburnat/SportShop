@@ -24,6 +24,8 @@ namespace SportShop.Controllers
             IdentitySeedData.EnsurePopulated(userMgr).Wait();
         }
 
+        public ViewResult Index() => View(userManager.Users);
+
         [AllowAnonymous]
         public ViewResult Login(string returnUrl)
         {

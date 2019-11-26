@@ -29,7 +29,7 @@ namespace SportShop
             services.AddTransient<IProductRepository, EFProductRepository>();
             services.AddTransient<IManufacturerRepository, EFManufacturerRepository>();
             services.AddTransient<ICategoryRepository, EFCategoryRepository>();
-            services.AddIdentity<IdentityUser, IdentityRole>()
+            services.AddIdentity<AppUser, IdentityRole>()
                     .AddEntityFrameworkStores<ApplicationDbContext>()
                     .AddDefaultTokenProviders();
             services.AddMvc();
