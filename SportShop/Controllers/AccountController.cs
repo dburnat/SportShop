@@ -26,6 +26,36 @@ namespace SportShop.Controllers
 
         public ViewResult Index() => View(userManager.Users);
 
+        public ViewResult Create() => View();
+
+        [HttpPost]
+        public async Task<IActionResult> Create(LoginModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                IdentityUser user = new IdentityUser
+                {
+                    UserName = model.Name,
+                    Email = model.Email
+                };
+
+                IdentityResult result = await userManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    foreach (IdentityError identityError in result.Errors)
+                    {
+                        ModelState.AddModelError("",identityError.Description);
+                    }
+                }
+            }
+
+            return View(model);
+        }
+
         [AllowAnonymous]
         public ViewResult Login(string returnUrl)
         {

@@ -24,7 +24,8 @@
             <a class="nav-item nav-link" href="@Url.Content("~/")">Index</a>
             @if (SignInManager.IsSignedIn(User))
             {
-              <a class="nav-item nav-link" asp-controller="Account" asp-action="Logout">Log out</a>
+                <a class="nav-item nav-link" asp-controller="Account" asp-action="Index">Users</a>
+                <a class="nav-item nav-link" asp-controller="Account" asp-action="Logout">Log out</a>
             }
             </div>
         </nav>
