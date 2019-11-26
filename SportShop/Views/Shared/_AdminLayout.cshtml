@@ -25,9 +25,10 @@
             @if (SignInManager.IsSignedIn(User))
             {
                 <a class="nav-item nav-link" asp-controller="Account" asp-action="Index">Users</a>
+                <a class="nav-item nav-link" asp-controller="Admin" asp-action="Index">Products</a>
                 <a class="nav-item nav-link" asp-controller="Account" asp-action="Logout">Log out</a>
             }
-            </div>
+        </div>
         </nav>
         <div class="bg-info p-2"><h4>@ViewBag.Title</h4></div>
         @if (TempData["message"] != null)

@@ -13,18 +13,25 @@ namespace SportShop.Controllers
     [Authorize]
     public class AccountController : Controller
     {
-        private UserManager<IdentityUser> userManager;
-        private SignInManager<IdentityUser> signInManager;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<IdentityUser> _signInManager;
+        private IUserValidator<IdentityUser> _userValidator;
+        private IPasswordValidator<IdentityUser> _passwordValidator;
+        private IPasswordHasher<IdentityUser> _passwordHasher;
+        
 
-        public AccountController(UserManager<IdentityUser> userMgr, SignInManager<IdentityUser> signIn)
+        public AccountController(UserManager<IdentityUser> userMgr, SignInManager<IdentityUser> signIn, IUserValidator<IdentityUser> userValidator, IPasswordValidator<IdentityUser> passwordValidator, IPasswordHasher<IdentityUser> passwordHasher)
         {
-            userManager = userMgr;
-            signInManager = signIn;
+            _userManager = userMgr;
+            _signInManager = signIn;
+            _userValidator = userValidator;
+            _passwordValidator = passwordValidator;
+            _passwordHasher = passwordHasher;
 
             IdentitySeedData.EnsurePopulated(userMgr).Wait();
         }
 
-        public ViewResult Index() => View(userManager.Users);
+        public ViewResult Index() => View(_userManager.Users);
 
         public ViewResult Create() => View();
 
@@ -36,10 +43,10 @@ namespace SportShop.Controllers
                 IdentityUser user = new IdentityUser
                 {
                     UserName = model.Name,
-                    Email = model.Email
+                    //Email = model.Email
                 };
 
-                IdentityResult result = await userManager.CreateAsync(user, model.Password);
+                IdentityResult result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     return RedirectToAction("Index");
@@ -56,6 +63,99 @@ namespace SportShop.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Delete(string id)
+        {
+            IdentityUser user = await _userManager.FindByIdAsync(id);
+            if (user != null)
+            {
+                IdentityResult result = await _userManager.DeleteAsync(user);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    AddErrorsFromResult(result);
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("", "Nie znaleziono użytkownika");
+            }
+
+            return View("Index", _userManager.Users);
+        }
+
+        private void AddErrorsFromResult(IdentityResult result)
+        {
+            foreach (IdentityError error in result.Errors)
+            {
+                ModelState.AddModelError("",error.Description);
+            }
+        }
+
+        public async Task<IActionResult> Edit(string id)
+        {
+            IdentityUser user =  await _userManager.FindByIdAsync(id);
+            if (user != null)
+            {
+                return View(user);
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(string id,  string password, string email = null)
+        {
+            IdentityUser user = await _userManager.FindByIdAsync(id);
+            if (user != null)
+            {
+                user.Email = email;
+                IdentityResult validEmail = await _userValidator.ValidateAsync(_userManager, user);
+                if (!validEmail.Succeeded)
+                {
+                    AddErrorsFromResult(validEmail);
+                }
+
+                IdentityResult validPassword = null;
+                //if (string.IsNullOrEmpty(password))
+                //{
+                //    validPassword = await _passwordValidator.ValidateAsync(_userManager ,user, password);
+                //    if (validPassword.Succeeded)
+                //    {
+                //        user.PasswordHash = _passwordHasher.HashPassword(user, password);
+                //    }
+                //    else
+                //    {
+                //        AddErrorsFromResult(validPassword);
+                //    }
+                //}
+
+                if ((validEmail.Succeeded && validPassword== null) || (validEmail.Succeeded && password != string.Empty && validPassword.Succeeded))
+                {
+                    IdentityResult result = await _userManager.UpdateAsync(user);
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        AddErrorsFromResult(result);
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Nie znaleziono użytkownika");
+                }
+
+                
+            }
+            return View(user);
+        }
         [AllowAnonymous]
         public ViewResult Login(string returnUrl)
         {
@@ -72,10 +172,10 @@ namespace SportShop.Controllers
         {
             if (ModelState.IsValid)
             {
-                IdentityUser user = await userManager.FindByNameAsync(loginModel.Name);
+                IdentityUser user = await _userManager.FindByNameAsync(loginModel.Name);
                 if (user != null)
                 {
-                    if ((await signInManager.PasswordSignInAsync(user,loginModel.Password,false,false)).Succeeded)
+                    if ((await _signInManager.PasswordSignInAsync(user,loginModel.Password,false,false)).Succeeded)
                     {
                         return RedirectToAction("Index", "Admin");
                     }
@@ -88,7 +188,7 @@ namespace SportShop.Controllers
 
         public async Task<RedirectResult> Logout(string returnUrl = "/")
         {
-            await signInManager.SignOutAsync();
+            await _signInManager.SignOutAsync();
             return Redirect(returnUrl);
         }
     }
