@@ -3,9 +3,22 @@
     ViewBag.Title = "Logowanie";
     Layout = "_AdminLayout";
 }
+<style>
+    .field-validation-error {
+        color: rgb(251, 219, 127);
+        background-color: rgb(81, 62, 0);
+        border-top-color: rgb(167, 126, 0);
+        border-right-color: rgb(167, 126, 0);
+        border-bottom-color: rgb(167, 126, 0);
+        border-left-color: rgb(167, 126, 0);
+        width: 100%;
+    }
+</style>
+
+@Html.ValidationMessage("LoginError")
 
 
-    <form asp-action="Login" asp-controller="Account" method="post">
+<form asp-action="Login" asp-controller="Account" method="post">
         <div class="form-group">
             <label asp-for="Name">Nazwa użytkownika</label>
             <div><span asp-validation-for="Name" class="text-danger"></span></div>

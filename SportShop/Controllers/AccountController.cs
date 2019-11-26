@@ -49,7 +49,7 @@ namespace SportShop.Controllers
                     }
                 }
             }
-            ModelState.AddModelError("", "Nieprawidłowe dane logowania");
+            ModelState.AddModelError("LoginError", "Nieprawidłowe dane logowania");
             return View(loginModel);
         }
 
