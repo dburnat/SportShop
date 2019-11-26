@@ -1,8 +1,26 @@
-﻿@model AppUser
+﻿@model IEnumerable<AppUser>
 
 @{
     ViewBag.Title = "Użytkownicy";
     Layout = "_Layout";
 }
 
-<h2>title</h2>
+<div class="bg-primary m-1 p-1 text-white"><h4>Konta użytkowników</h4></div>
+<table class="table table-sm table-bordered">
+    <tr><th>ID</th><th>Nazwa użytkownika</th><th>Email</th></tr>
+    @if (Model.Count() == 0)
+    {
+        <tr><td colspan="3" class="text-center">Brak użytkowników</td></tr>
+    }
+    else
+    {
+        foreach (AppUser appUser in Model)
+        {
+            <tr>
+                <td>@appUser.Id</td>
+                <td>@appUser.UserName</td>
+                <td>@appUser.Email</td>
+            </tr>
+        }
+    }
+</table>
