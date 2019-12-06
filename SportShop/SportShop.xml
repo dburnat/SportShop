@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SportShop</name>
+    </assembly>
+    <members>
+        <member name="M:SportShop.Controllers.ProductApiController.Get">
+            <summary>
+            Returns list of all products currently stored in database
+            </summary>
+            <returns>List of all products</returns>
+        </member>
+        <member name="M:SportShop.Controllers.ProductApiController.GetById(System.Int32)">
+            <summary>
+            Returns product with specific id
+            </summary>
+            <param name="id">Integer</param>
+            <returns>Product</returns>
+        </member>
+        <member name="M:SportShop.Controllers.ProductApiController.Create(SportShop.Models.Product)">
+            <summary>
+            Creates a new product
+            </summary>
+            <param name="product">Product object</param>
+            <returns>Product that was created</returns>
+        </member>
+        <member name="M:SportShop.Controllers.ProductApiController.Edit(System.Int32)">
+            <summary>
+            Edits a product with specific id
+            </summary>
+            <param name="id">Integer</param>
+            <returns>Product that was edited</returns>
+        </member>
+        <member name="M:SportShop.Controllers.ProductApiController.Delete(System.Int32)">
+            <summary>
+            Deletes product with specific id
+            </summary>
+            <param name="id">Integer</param>
+            <returns>StatusCode200</returns>
+        </member>
+    </members>
+</doc>
