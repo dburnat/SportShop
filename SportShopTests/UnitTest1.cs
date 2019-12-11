@@ -27,7 +27,7 @@ namespace SportShopTests
 
 
             var controller = new AdminController(mock.Object);
-
+            
             var result = controller.Index();
 
             var model = (IEnumerable<Product>)(result).Model;
@@ -37,6 +37,27 @@ namespace SportShopTests
             Assert.Equal("first",array[0].Name);
             Assert.Equal("second",array[1].Name);
             Assert.Equal("third",array[2].Name);
+        }
+
+        [Fact]
+        public void ReturningProperCategories()
+        {
+            var mock = new Mock<IProductRepository>();
+            mock.Setup(p => p.Products).Returns(new[]
+            {
+                new Product {ProductID = 1, Name = "first", CategoryID = 1},
+                new Product {ProductID = 1, Name = "first2", CategoryID = 1},
+                new Product {ProductID = 2, Name = "second", CategoryID = 2},
+                new Product {ProductID = 3, Name = "third", CategoryID = 3},
+            }.AsQueryable);
+
+            var controller = new ProductController(mock.Object);
+            var result = controller.List(1);
+            var model = (IEnumerable<Product>) (result).Model;
+            var array = model.ToArray();
+            Assert.Equal(2, model.Count());
+            Assert.Equal("first", array[0].Name);
+            Assert.Equal("first2",array[1].Name);
         }
     }
 }
