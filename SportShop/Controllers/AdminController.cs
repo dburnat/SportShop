@@ -15,7 +15,7 @@ namespace SportShop.Controllers
         private readonly IProductRepository _productRepository;
         private readonly ICategoryRepository _categoryRepository;
 
-        public AdminController(IProductRepository productRepository, ICategoryRepository categoryRepository)
+        public AdminController(IProductRepository productRepository, ICategoryRepository categoryRepository = null)
         {
             _productRepository = productRepository;
             _categoryRepository = categoryRepository;

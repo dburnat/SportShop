@@ -15,9 +15,9 @@ namespace SportShop.Controllers
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
-        private IUserValidator<AppUser> _userValidator;
-        private IPasswordValidator<AppUser> _passwordValidator;
-        private IPasswordHasher<AppUser> _passwordHasher;
+        private readonly IUserValidator<AppUser> _userValidator;
+        private readonly IPasswordValidator<AppUser> _passwordValidator;
+        private readonly IPasswordHasher<AppUser> _passwordHasher;
         
 
         public AccountController(UserManager<AppUser> userMgr, SignInManager<AppUser> signIn, IUserValidator<AppUser> userValidator, IPasswordValidator<AppUser> passwordValidator, IPasswordHasher<AppUser> passwordHasher)
@@ -30,7 +30,8 @@ namespace SportShop.Controllers
 
             //IdentitySeedData.EnsurePopulated(userMgr).Wait();
         }
-
+        //TODO
+        //Seperate logging in
         public ViewResult Index() => View(_userManager.Users);
 
         public ViewResult Create() => View();
