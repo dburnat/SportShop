@@ -13,6 +13,7 @@ using SportShop.Models;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 using System.IO;
+using SportShop.Infrastructure;
 
 namespace SportShop
 {
@@ -39,7 +40,7 @@ namespace SportShop
                 })
                     .AddEntityFrameworkStores<ApplicationDbContext>()
                     .AddDefaultTokenProviders();
-            services.AddMvc();
+            services.AddMvc(options => options.Filters.Add(typeof(DiagnosticFilter)));
 
             services.Configure<IdentityOptions>(options =>
             {

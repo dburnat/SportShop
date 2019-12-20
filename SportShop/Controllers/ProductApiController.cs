@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SportShop.Infrastructure;
 using SportShop.Models;
 
 namespace SportShop.Controllers
@@ -117,6 +118,26 @@ namespace SportShop.Controllers
 
             return Ok(product);
         }
-       
+
+        [HttpDelete("{id}")]
+        [ServiceFilter(typeof(DiagnosticFilter))]
+        public IActionResult DeleteWithFilter(int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var product = _productRepository.Products.FirstOrDefault(p => p.ProductID == id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            _productRepository.DeleteProduct(id);
+
+            return Ok(product);
+        }
+
     }
 }
