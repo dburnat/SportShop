@@ -25,7 +25,7 @@ namespace SportShop.Infrastructure
             var executionTime = stopWatch.ElapsedMilliseconds;
             if (executionTime > 5000)
             {
-                //
+                Debug.WriteLine("Action took to much time");
             }
         }
 
