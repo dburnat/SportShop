@@ -9,8 +9,8 @@ namespace SportShop.Models
 {
     public class AppUser : IdentityUser
     {
-        [Required]
-        public string Name { get; set; }
+        [Required] 
+        public override string UserName { get; set; }
         [Required]
         [UIHint("Password")]
         public string Password { get; set; }

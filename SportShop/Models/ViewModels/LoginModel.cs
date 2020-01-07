@@ -9,7 +9,7 @@ namespace SportShop.Models
     public class LoginModel
     {
         [Required]
-        public string Name { get; set; }
+        public string UserName { get; set; }
         [Required]
         [UIHint("Password")]
         public string Password { get; set; }

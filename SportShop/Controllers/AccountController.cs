@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using SportShop.Views;
@@ -18,24 +19,24 @@ namespace SportShop.Controllers
         private readonly IUserValidator<AppUser> _userValidator;
         private readonly IPasswordValidator<AppUser> _passwordValidator;
         private readonly IPasswordHasher<AppUser> _passwordHasher;
-        
 
-        public AccountController(UserManager<AppUser> userMgr, SignInManager<AppUser> signIn, IUserValidator<AppUser> userValidator, IPasswordValidator<AppUser> passwordValidator, IPasswordHasher<AppUser> passwordHasher)
+
+        public AccountController(UserManager<AppUser> userMgr, SignInManager<AppUser> signIn,
+            IUserValidator<AppUser> userValidator, IPasswordValidator<AppUser> passwordValidator,
+            IPasswordHasher<AppUser> passwordHasher)
         {
             _userManager = userMgr;
             _signInManager = signIn;
             _userValidator = userValidator;
             _passwordValidator = passwordValidator;
             _passwordHasher = passwordHasher;
-
-            //IdentitySeedData.EnsurePopulated(userMgr).Wait();
         }
-        //TODO
-        //Seperate logging in
+        
         public ViewResult Index() => View(_userManager.Users);
 
         public ViewResult Create() => View();
 
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Create(LoginModel model)
         {
@@ -43,10 +44,9 @@ namespace SportShop.Controllers
             {
                 AppUser user = new AppUser
                 {
-                    UserName = model.Name,
                     Email = model.Email,
-                    Name = model.Name,
-                    Password = model.Password
+                    Password = model.Password,
+                    UserName = model.UserName
                 };
 
                 IdentityResult result = await _userManager.CreateAsync(user, user.Password);
@@ -58,7 +58,7 @@ namespace SportShop.Controllers
                 {
                     foreach (IdentityError identityError in result.Errors)
                     {
-                        ModelState.AddModelError("",identityError.Description);
+                        ModelState.AddModelError("", identityError.Description);
                     }
                 }
             }
@@ -94,13 +94,13 @@ namespace SportShop.Controllers
         {
             foreach (IdentityError error in result.Errors)
             {
-                ModelState.AddModelError("",error.Description);
+                ModelState.AddModelError("", error.Description);
             }
         }
 
         public async Task<IActionResult> Edit(string id)
         {
-            IdentityUser user =  await _userManager.FindByIdAsync(id);
+            IdentityUser user = await _userManager.FindByIdAsync(id);
             if (user != null)
             {
                 return View(user);
@@ -112,13 +112,13 @@ namespace SportShop.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(string id,  string password, string email, string userName)
+        public async Task<IActionResult> Edit(string id, string password, string email, string userName)
         {
             AppUser user = await _userManager.FindByIdAsync(id);
             if (user != null)
             {
                 user.Email = email;
-                user.Name = userName;
+                user.UserName = userName;
                 IdentityResult validEmail = await _userValidator.ValidateAsync(_userManager, user);
                 if (!validEmail.Succeeded)
                 {
@@ -141,7 +141,7 @@ namespace SportShop.Controllers
                 }
 
 
-                if ((validEmail.Succeeded && validPassword== null) || (validEmail.Succeeded && password != string.Empty && validPassword.Succeeded))
+                if ((validEmail.Succeeded && validPassword == null) || (validEmail.Succeeded && password != string.Empty && validPassword.Succeeded))
                 {
                     IdentityResult result = await _userManager.UpdateAsync(user);
                     if (result.Succeeded)
@@ -157,8 +157,6 @@ namespace SportShop.Controllers
                 {
                     ModelState.AddModelError("", "Nie znaleziono użytkownika");
                 }
-
-                
             }
             return View(user);
         }
@@ -178,10 +176,10 @@ namespace SportShop.Controllers
         {
             if (ModelState.IsValid)
             {
-                AppUser user = await _userManager.FindByNameAsync(loginModel.Name);
+                AppUser user = await _userManager.FindByNameAsync(loginModel.UserName);
                 if (user != null)
                 {
-                    if ((await _signInManager.PasswordSignInAsync(user,loginModel.Password,false,false)).Succeeded)
+                    if ((await _signInManager.PasswordSignInAsync(user, loginModel.Password, false, false)).Succeeded)
                     {
                         return RedirectToAction("Index", "Admin");
                     }
